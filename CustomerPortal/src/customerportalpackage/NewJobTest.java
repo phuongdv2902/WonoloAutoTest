@@ -1,0 +1,151 @@
+package customerportalpackage;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class NewJobTest {
+
+	public static void main(String[] args) {
+		// TODO Login Portal
+		
+		System.setProperty("webdriver.gecko.driver", "path/geckodriver.exe");
+		
+		WebDriver driver=new FirefoxDriver();
+		driver.get("https://wonolo-dev.herokuapp.com/users/sign_in");
+		driver.manage().window().maximize();
+		
+		WebElement email= driver.findElement(By.xpath(".//*[@id='user_email']"));
+		email.sendKeys("dvuphuong@gmail.com");
+		
+		WebElement pass= driver.findElement(By.xpath(".//*[@id='user_password']"));
+		pass.sendKeys("12345678");
+		
+		
+		WebElement button= driver.findElement(By.xpath(".//*[@id='new_user']/div[5]/div/input"));
+		button.click();
+		
+		// TODO Click Create New Job
+		
+		try{Thread.sleep(3000);}
+		catch(InterruptedException ie){}
+		
+		driver.navigate().to("https://wonolo-dev.herokuapp.com/job_requests/new");
+		
+		try{Thread.sleep(3000);}
+		catch(InterruptedException ie){}
+		
+		WebElement jobname = driver.findElement(By.xpath(".//*[@id='job_request_request_name']"));
+		jobname.sendKeys("Job Name");
+		
+		Select jobCategorySelect=new Select(driver.findElement(By.id("job_request_category")));
+		jobCategorySelect.selectByIndex(1);
+		
+		WebElement jobRequestDescriptionTasks = driver.findElement(By.id("job_request_description_tasks"));
+		jobRequestDescriptionTasks.sendKeys("Tasks to be performed");
+		
+		WebElement requirements = driver.findElement(By.xpath(".//*[@id='what_section']/div[2]/div[5]/div[2]/div[1]/input"));
+		requirements.sendKeys("Careful requirements");
+		
+		//Add Requirements Second
+		try{Thread.sleep(1000);}
+		catch(InterruptedException ie){}
+		
+		WebElement addRequirements = driver.findElement(By.xpath(".//*[@id='what_section']/div[2]/div[5]/div[3]/i"));
+		addRequirements.click();
+
+		WebElement requirementsSecond = driver.findElement(By.xpath(".//*[@id='new_requirement']/div[1]/input"));
+		requirementsSecond.sendKeys("Careful requirements second");
+		
+		WebElement jobRequestDescriptionCompany = driver.findElement(By.id("job_request_description_company"));
+		jobRequestDescriptionCompany.sendKeys("Company description new job");
+		
+		WebElement jobRequestDescriptionTravel = driver.findElement(By.id("job_request_description_travel"));
+		jobRequestDescriptionTravel.sendKeys("Travel tips description new job");
+		
+		WebElement jobRequestDescriptionArrival = driver.findElement(By.id("job_request_description_arrival"));
+		jobRequestDescriptionArrival.sendKeys("Arrival instructions description new job");
+		
+		WebElement jobRequestSlots = driver.findElement(By.id("job_request_slots"));
+		jobRequestSlots.clear();
+		jobRequestSlots.sendKeys("02");
+		
+		try{Thread.sleep(1000);}
+		catch(InterruptedException ie){}
+		
+		//TODO Check Box Select
+		List<WebElement> listBadge= driver.findElements(By.xpath(".//*[@id='job_request_required_badge_ids_']"));
+		System.out.print(listBadge.size());
+		for (int i = 0; i < listBadge.size(); i++) 
+		{
+			if(i%2==0)
+			{
+				WebElement badge=listBadge.get(i);
+				badge.click();
+			}
+		}
+		
+		//TOTO Where 
+		try{Thread.sleep(1000);}
+		catch(InterruptedException ie){}
+		
+		WebElement jobRequestVenue = driver.findElement(By.id("job_request_venue"));
+		jobRequestVenue.sendKeys("Building Venue");
+
+		WebElement jobRequestAddress = driver.findElement(By.id("job_request_address"));
+		jobRequestAddress.sendKeys("Alabama");
+		
+		WebElement jobRequestCity = driver.findElement(By.id("job_request_city"));
+		jobRequestCity.sendKeys("Alexander City");
+		
+		WebElement jobRequestZip = driver.findElement(By.id("job_request_zip"));
+		jobRequestZip.sendKeys("35010");
+		
+		//TODO Select Date 
+		
+		try{Thread.sleep(1000);}
+		catch(InterruptedException ie){}
+		WebElement dateStart=driver.findElement(By.xpath(".//*[@id='jri_job_form_start_time']/input"));
+		dateStart.click();
+		
+		try{Thread.sleep(1000);}
+		catch(InterruptedException ie){}
+		WebElement chooseDateStart=driver.findElement(By.xpath(".//*[@id='jri_job_form_start_time']/div/div/div[1]/div[1]/table/tbody/tr[5]/td[7]"));
+		chooseDateStart.click();
+		System.out.print("chooseDateStart");
+		
+		try{Thread.sleep(1000);}
+		catch(InterruptedException ie){}
+		WebElement houseStart=driver.findElement(By.xpath(".//*[@id='jri_job_form_start_time']/div/div/div[2]/div[1]/table/tbody/tr[2]/td[1]/span"));
+		houseStart.click();
+		
+		try{Thread.sleep(1000);}
+		catch(InterruptedException ie){}
+		WebElement chooseHouseStart=driver.findElement(By.xpath(".//*[@id='jri_job_form_start_time']/div/div/div[2]/div[2]/table/tbody/tr[3]/td[1]"));
+		chooseHouseStart.click();
+		
+		try{Thread.sleep(1000);}
+		catch(InterruptedException ie){}
+		Select estimatedhoursSelect=new Select(driver.findElement(By.id("job_request_duration_hours")));
+		estimatedhoursSelect.selectByIndex(8);
+		
+		Select estimatedMinSelect=new Select(driver.findElement(By.id("job_request_duration_minutes")));
+		estimatedMinSelect.selectByIndex(1);
+		
+		//TODO Submit
+		WebElement jobRequestWage=driver.findElement(By.id("job_request_wage"));
+		jobRequestWage.sendKeys("5400");
+		
+		try{Thread.sleep(1000);}
+		catch(InterruptedException ie){}
+		WebElement postJobButton=driver.findElement(By.id("post_job_button"));
+		postJobButton.click();
+		
+		System.out.print("Done");
+	}
+	
+}
